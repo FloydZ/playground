@@ -1,0 +1,11 @@
+[package]
+name = "p22"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+divan = "0.1.21"
+
+[[bench]]
+name = "fibonacci"
+harness = false

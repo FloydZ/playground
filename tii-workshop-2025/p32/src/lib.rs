@@ -1,7 +1,4 @@
-// extern crate rug;
-
-mod math;
-pub use math::{number, vector};
+pub mod bank;
 
 pub fn add(left: u64, right: u64) -> u64 {
     left + right

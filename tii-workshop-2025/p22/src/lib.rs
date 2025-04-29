@@ -1,7 +1,6 @@
-// extern crate rug;
-
-mod math;
-pub use math::{number, vector};
+pub mod calc;
+pub mod song;
+pub mod tictac;
 
 pub fn add(left: u64, right: u64) -> u64 {
     left + right

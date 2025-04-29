@@ -1,0 +1,13 @@
+[package]
+name = "miniaes-sys"
+version = "0.1.0"
+edition = "2021"
+build = "build.rs"
+
+[dependencies]
+
+[build.debug]
+rustflags = ["-L", "/home/duda/.cache/cargo/debug"]
+
+[buil.release]
+rustflags = ["-L", "/home/duda/.cache/cargo/release"]
