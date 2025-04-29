@@ -1,0 +1,6 @@
+polynomial/elem/cl_asm_GF2.lo: polynomial/elem/cl_asm_GF2.S \
+ /nix/store/81awch8mhqanda1vy0c09bflgra4cxh0-glibc-2.40-66-dev/include/stdc-predef.h \
+ ../autoconf/cl_config.h ../include/cln/host_cpu.h
+/nix/store/81awch8mhqanda1vy0c09bflgra4cxh0-glibc-2.40-66-dev/include/stdc-predef.h:
+../autoconf/cl_config.h:
+../include/cln/host_cpu.h:

@@ -1,0 +1,30 @@
+cargo-features = ["edition2024", "profile-rustflags"]
+
+[package]
+name = "bigfloat-bench"
+version = "0.1.0"
+authors = ["stencillogic <stencillogic@gmail.com>"]
+edition = "2021"
+description = "A benchmark of bigfloat libraries for Rust "
+keywords = ["bigfloat", "bignum", "mathematics", "benchmark"]
+categories = ["mathematics"]
+license = "MIT"
+repository = "https://github.com/stencillogic/bigfloat-bench"
+homepage = "https://github.com/stencillogic/bigfloat-bench"
+readme = "README.md"
+
+[dependencies]
+clap = "2.33.3"
+rug = { version = "1.27.0", features = ["float", "rand"]}
+num-bigfloat = "1.7.2"
+dashu-float = "0.3.0"
+dashu-int = "0.3.0"
+astro-float = "0.9.5"
+rand = "0.8.5"
+
+[profile.release]
+panic = "abort"
+opt-level = 3
+lto = "fat"
+codegen-units = 1
+rustflags=["-C", "target-cpu=native"]
