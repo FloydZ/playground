@@ -1,0 +1,6 @@
+isdfq
+.cache
+cmake-build-debug/
+cmake-build-release/
+.ipynb_checkpoints/
+.ipynb_checkpoints
