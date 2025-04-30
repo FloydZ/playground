@@ -1,6 +1,5 @@
-use rug::{Complete, Float, Integer};
+use rug::{Float, Integer};
 use std::{
-    borrow::Borrow,
     cmp::PartialOrd,
     fmt::{Debug, Display},
     iter::Sum,
@@ -14,13 +13,19 @@ pub trait BigNumber:
     + Clone
     + Debug
     + Default
+    + Display
     + for<'a> Add<&'a Self, Output = Self>
     + for<'a> AddAssign<&'a Self>
     + for<'a> Sub<&'a Self, Output = Self>
     + for<'a> SubAssign<&'a Self>
     + for<'a> Mul<&'a Self, Output = Self>
+    + for<'a> MulAssign<&'a Self>
+    + for<'a> Div<&'a Self, Output = Self>
+    + for<'a> DivAssign<&'a Self>
     + Sum<Self>
-{}
+{
+    //pub fn is_zero(&self) -> bool;
+}
 
 impl<T> BigNumber for T where T:
     From<i32>
@@ -29,15 +34,20 @@ impl<T> BigNumber for T where T:
     + Clone
     + Debug
     + Default
+    + Display
     + for<'a> Add<&'a Self, Output = Self>
     + for<'a> AddAssign<&'a Self>
     + for<'a> Sub<&'a Self, Output = Self>
     + for<'a> SubAssign<&'a Self>
     + for<'a> Mul<&'a Self, Output = Self>
+    + for<'a> MulAssign<&'a Self>
+    + for<'a> Div<&'a Self, Output = Self>
+    + for<'a> DivAssign<&'a Self>
     + Sum<Self>
 {}
 
 pub type BigInteger = Integer;
+pub type BigFloat = Float;
 
 //pub trait BigNumber<'a>
 //where
@@ -45,8 +55,6 @@ pub type BigInteger = Integer;
 //    Self: Default,
 //    Self: Add<Self>,
 //    &'a Self:Add<&'a Self>,
-//    // TODO Self: Display,
-//    Self: Clone, // TODO remove
 //{
 //    // fn rand_normal(n: usize, exp_from: i32, exp_to: i32, gs: G, sign_positive: bool) -> Vec<Self>;
 //    fn new() -> Self;
@@ -108,7 +116,8 @@ mod tests {
     fn it_works() {
         let a = BigInteger::new();
         let b = BigInteger::new();
-        let _c= a+b;
+        let c= a+b;
+        assert!(c.is_zero());
     }
 }
 
