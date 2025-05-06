@@ -3,7 +3,7 @@ use super::number::{BigInteger, BigNumber};
 
 use std::{
     fmt,
-    ops::{Index, IndexMut, Add, Sub},
+    ops::{Index, IndexMut, Add},
     vec::IntoIter,
 };
 
@@ -15,7 +15,9 @@ pub struct Vector<T: BigNumber> {
     coefficients: Vec<T>,
 }
 
-impl<T: BigNumber> Vector<T> {
+impl<T: BigNumber> Vector<T> 
+    where for <'b> &'b mut T: Add<&'b T, Output = T>
+{
     //pub fn basis_vector(dimension: usize, position: usize) -> Self {
     //    assert!(position < dimension);
     //    let coefficients = (0..dimension)
@@ -29,38 +31,61 @@ impl<T: BigNumber> Vector<T> {
     //        .collect();
     //    Self { coefficients }
     //}
-    /// Create an instance from a `Vec`
     
+    /// Create an instance from a `Vec`
+    /// # Examples
+    ///
+    /// ```
+    /// let result = my_crate::add(2, 3);
+    /// assert_eq!(result, 5);
+    /// ```
+    ///
+    /// # Parameters
+    /// - `a`: The first number.
+    /// - `b`: The second number.
+    ///
+    /// # Returns
+    /// The sum of `a` and `b`.
     #[inline]
     pub fn from_vector(coefficients: Vec<T>) -> Self {
         Self { coefficients }
     }
 
+    #[inline]
     pub fn init(dimension: usize) -> Self {
         Self {
             coefficients: vec![Default::default(); dimension],
         }
     }
     
+    #[inline]
     pub fn zero(dimension: usize) -> Self {
         Vector::<T>::init(dimension)
     }
 
+    #[inline]
     pub fn dimension(&self) -> usize {
         self.coefficients.len()
     }
 
-    pub fn add(&self, other: &Self) -> Self {
+    #[inline]
+    pub fn add<'a>(&'a mut self, other: &'a Self) {
         let n = self.dimension();
         assert_eq!(n, other.dimension());
-
-        Self::from_vector(
-            (0..n)
-                .map(|i| self.coefficients[i].clone() + &other.coefficients[i])
-                .collect(),
-        )
+        
+        for i in 0..n{
+            let a = &mut self.coefficients[i] + &other.coefficients[i];
+            self.coefficients[i] = a.into();
+        }
+        //self.coefficients = (0..n).map(|i| &mut self.coefficients[i] + &mut other.coefficients[i]).collect();
+        //Self::from_vector(
+        //                  (0..n)
+        //        .map(|i| self.coefficients[i].clone() + &other.coefficients[i])
+        //        .collect(),
+        //)
     }
 
+    #[inline]
     pub fn sub(&self, other: &Self) -> Self {
         let n = self.dimension();
 
@@ -74,6 +99,7 @@ impl<T: BigNumber> Vector<T> {
     }
 
     /// Multiplication by a scalar
+    #[inline]
     pub fn mulf(&self, other: T) -> Self {
         let n = self.dimension();
 
@@ -97,7 +123,7 @@ impl<T: BigNumber> Vector<T> {
     }
 }
 
-
+#[cfg(feature = "normal_arithmetic")]
 impl<T: BigNumber> Add for Vector<T> {
     type Output = Self;
 
@@ -106,6 +132,7 @@ impl<T: BigNumber> Add for Vector<T> {
     }
 }
 
+#[cfg(feature = "normal_arithmetic")]
 impl<T: BigNumber> Sub for Vector<T> {
     type Output = Self;
 

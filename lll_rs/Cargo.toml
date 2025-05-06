@@ -22,3 +22,7 @@ lto = true
 #[[bench]]
 #name = "benchmark"
 #harness = false
+
+[features]
+default = []
+normal_arithmetic = []
