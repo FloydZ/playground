@@ -1,0 +1,56 @@
+[
+{
+  "directory": "/home/duda/Downloads/programming/playground/imgui-flame-graph/build",
+  "command": "/nix/store/mzfk1sdv6bxvdh9slvddpj734ck99idi-gcc-wrapper-13.3.0/bin/g++  -I/nix/store/1ccv7ssxdx7l519h0j4kpb7y9mzdn079-SDL2-2.30.6-dev/include/SDL2 -I/home/duda/Downloads/programming/playground/imgui-flame-graph/imgui -I/home/duda/Downloads/programming/playground/imgui-flame-graph/imgui/backends -O3 -DNDEBUG -o CMakeFiles/imgui.dir/imgui/imgui.cpp.o -c /home/duda/Downloads/programming/playground/imgui-flame-graph/imgui/imgui.cpp",
+  "file": "/home/duda/Downloads/programming/playground/imgui-flame-graph/imgui/imgui.cpp",
+  "output": "CMakeFiles/imgui.dir/imgui/imgui.cpp.o"
+},
+{
+  "directory": "/home/duda/Downloads/programming/playground/imgui-flame-graph/build",
+  "command": "/nix/store/mzfk1sdv6bxvdh9slvddpj734ck99idi-gcc-wrapper-13.3.0/bin/g++  -I/nix/store/1ccv7ssxdx7l519h0j4kpb7y9mzdn079-SDL2-2.30.6-dev/include/SDL2 -I/home/duda/Downloads/programming/playground/imgui-flame-graph/imgui -I/home/duda/Downloads/programming/playground/imgui-flame-graph/imgui/backends -O3 -DNDEBUG -o CMakeFiles/imgui.dir/imgui/imgui_draw.cpp.o -c /home/duda/Downloads/programming/playground/imgui-flame-graph/imgui/imgui_draw.cpp",
+  "file": "/home/duda/Downloads/programming/playground/imgui-flame-graph/imgui/imgui_draw.cpp",
+  "output": "CMakeFiles/imgui.dir/imgui/imgui_draw.cpp.o"
+},
+{
+  "directory": "/home/duda/Downloads/programming/playground/imgui-flame-graph/build",
+  "command": "/nix/store/mzfk1sdv6bxvdh9slvddpj734ck99idi-gcc-wrapper-13.3.0/bin/g++  -I/nix/store/1ccv7ssxdx7l519h0j4kpb7y9mzdn079-SDL2-2.30.6-dev/include/SDL2 -I/home/duda/Downloads/programming/playground/imgui-flame-graph/imgui -I/home/duda/Downloads/programming/playground/imgui-flame-graph/imgui/backends -O3 -DNDEBUG -o CMakeFiles/imgui.dir/imgui/imgui_widgets.cpp.o -c /home/duda/Downloads/programming/playground/imgui-flame-graph/imgui/imgui_widgets.cpp",
+  "file": "/home/duda/Downloads/programming/playground/imgui-flame-graph/imgui/imgui_widgets.cpp",
+  "output": "CMakeFiles/imgui.dir/imgui/imgui_widgets.cpp.o"
+},
+{
+  "directory": "/home/duda/Downloads/programming/playground/imgui-flame-graph/build",
+  "command": "/nix/store/mzfk1sdv6bxvdh9slvddpj734ck99idi-gcc-wrapper-13.3.0/bin/g++  -I/nix/store/1ccv7ssxdx7l519h0j4kpb7y9mzdn079-SDL2-2.30.6-dev/include/SDL2 -I/home/duda/Downloads/programming/playground/imgui-flame-graph/imgui -I/home/duda/Downloads/programming/playground/imgui-flame-graph/imgui/backends -O3 -DNDEBUG -o CMakeFiles/imgui.dir/imgui/imgui_demo.cpp.o -c /home/duda/Downloads/programming/playground/imgui-flame-graph/imgui/imgui_demo.cpp",
+  "file": "/home/duda/Downloads/programming/playground/imgui-flame-graph/imgui/imgui_demo.cpp",
+  "output": "CMakeFiles/imgui.dir/imgui/imgui_demo.cpp.o"
+},
+{
+  "directory": "/home/duda/Downloads/programming/playground/imgui-flame-graph/build",
+  "command": "/nix/store/mzfk1sdv6bxvdh9slvddpj734ck99idi-gcc-wrapper-13.3.0/bin/g++  -I/nix/store/1ccv7ssxdx7l519h0j4kpb7y9mzdn079-SDL2-2.30.6-dev/include/SDL2 -I/home/duda/Downloads/programming/playground/imgui-flame-graph/imgui -I/home/duda/Downloads/programming/playground/imgui-flame-graph/imgui/backends -O3 -DNDEBUG -o CMakeFiles/imgui.dir/imgui/imgui_tables.cpp.o -c /home/duda/Downloads/programming/playground/imgui-flame-graph/imgui/imgui_tables.cpp",
+  "file": "/home/duda/Downloads/programming/playground/imgui-flame-graph/imgui/imgui_tables.cpp",
+  "output": "CMakeFiles/imgui.dir/imgui/imgui_tables.cpp.o"
+},
+{
+  "directory": "/home/duda/Downloads/programming/playground/imgui-flame-graph/build",
+  "command": "/nix/store/mzfk1sdv6bxvdh9slvddpj734ck99idi-gcc-wrapper-13.3.0/bin/g++  -I/nix/store/1ccv7ssxdx7l519h0j4kpb7y9mzdn079-SDL2-2.30.6-dev/include/SDL2 -I/home/duda/Downloads/programming/playground/imgui-flame-graph/imgui -I/home/duda/Downloads/programming/playground/imgui-flame-graph/imgui/backends -O3 -DNDEBUG -o CMakeFiles/imgui.dir/imgui/backends/imgui_impl_sdl2.cpp.o -c /home/duda/Downloads/programming/playground/imgui-flame-graph/imgui/backends/imgui_impl_sdl2.cpp",
+  "file": "/home/duda/Downloads/programming/playground/imgui-flame-graph/imgui/backends/imgui_impl_sdl2.cpp",
+  "output": "CMakeFiles/imgui.dir/imgui/backends/imgui_impl_sdl2.cpp.o"
+},
+{
+  "directory": "/home/duda/Downloads/programming/playground/imgui-flame-graph/build",
+  "command": "/nix/store/mzfk1sdv6bxvdh9slvddpj734ck99idi-gcc-wrapper-13.3.0/bin/g++  -I/nix/store/1ccv7ssxdx7l519h0j4kpb7y9mzdn079-SDL2-2.30.6-dev/include/SDL2 -I/home/duda/Downloads/programming/playground/imgui-flame-graph/imgui -I/home/duda/Downloads/programming/playground/imgui-flame-graph/imgui/backends -O3 -DNDEBUG -o CMakeFiles/imgui.dir/imgui/backends/imgui_impl_opengl3.cpp.o -c /home/duda/Downloads/programming/playground/imgui-flame-graph/imgui/backends/imgui_impl_opengl3.cpp",
+  "file": "/home/duda/Downloads/programming/playground/imgui-flame-graph/imgui/backends/imgui_impl_opengl3.cpp",
+  "output": "CMakeFiles/imgui.dir/imgui/backends/imgui_impl_opengl3.cpp.o"
+},
+{
+  "directory": "/home/duda/Downloads/programming/playground/imgui-flame-graph/build/example",
+  "command": "/nix/store/mzfk1sdv6bxvdh9slvddpj734ck99idi-gcc-wrapper-13.3.0/bin/g++ -DIMGUI_DEFINE_MATH_OPERATORS -DIMGUI_IMPL_OPENGL_LOADER_GL3W -I/home/duda/Downloads/programming/playground/imgui-flame-graph/imgui -I/home/duda/Downloads/programming/playground/imgui-flame-graph/imgui/backends -isystem /nix/store/1ccv7ssxdx7l519h0j4kpb7y9mzdn079-SDL2-2.30.6-dev/include/SDL2 -O3 -DNDEBUG -o CMakeFiles/imgui-flame-graph-example.dir/main.cpp.o -c /home/duda/Downloads/programming/playground/imgui-flame-graph/example/main.cpp",
+  "file": "/home/duda/Downloads/programming/playground/imgui-flame-graph/example/main.cpp",
+  "output": "example/CMakeFiles/imgui-flame-graph-example.dir/main.cpp.o"
+},
+{
+  "directory": "/home/duda/Downloads/programming/playground/imgui-flame-graph/build/example",
+  "command": "/nix/store/mzfk1sdv6bxvdh9slvddpj734ck99idi-gcc-wrapper-13.3.0/bin/g++ -DIMGUI_DEFINE_MATH_OPERATORS -DIMGUI_IMPL_OPENGL_LOADER_GL3W -I/home/duda/Downloads/programming/playground/imgui-flame-graph/imgui -I/home/duda/Downloads/programming/playground/imgui-flame-graph/imgui/backends -isystem /nix/store/1ccv7ssxdx7l519h0j4kpb7y9mzdn079-SDL2-2.30.6-dev/include/SDL2 -O3 -DNDEBUG -o CMakeFiles/imgui-flame-graph-example.dir/__/imgui_widget_flamegraph.cpp.o -c /home/duda/Downloads/programming/playground/imgui-flame-graph/imgui_widget_flamegraph.cpp",
+  "file": "/home/duda/Downloads/programming/playground/imgui-flame-graph/imgui_widget_flamegraph.cpp",
+  "output": "example/CMakeFiles/imgui-flame-graph-example.dir/__/imgui_widget_flamegraph.cpp.o"
+}
+]

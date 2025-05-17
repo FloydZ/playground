@@ -3,11 +3,11 @@
 // If you are new to Dear ImGui, read documentation from the docs/ folder + read the top of imgui.cpp.
 // Read online: https://github.com/ocornut/imgui/tree/master/docs
 
+#define SDL_MAIN_HANDLED
 #include "imgui.h"
 #include "imgui_impl_sdl2.h"
 #include "imgui_impl_opengl3.h"
 #include <stdio.h>
-#define SDL_MAIN_HANDLED
 #include <SDL.h>
 #if defined(IMGUI_IMPL_OPENGL_ES2)
 #include <SDL_opengles2.h>
@@ -17,7 +17,7 @@
 
 #include <array>
 #include <chrono>
-#include <imgui_widget_flamegraph.h>
+#include "../imgui_widget_flamegraph.h"
 
 class Profiler
 {
