@@ -14,7 +14,7 @@ find_package(gl3w REQUIRED)
 
 include_directories(${SDL2_INCLUDE_DIRS})
 include_directories(${gl3w_INCLUDE_DIRS})
-#include_directories(imgui)
+include_directories(imgui)
 #include_directories(imgui/backends)
 
 ##################################################################################################################

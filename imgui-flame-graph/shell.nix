@@ -14,12 +14,29 @@ let
     # needed for <Gl/gl.h>
     libGL
     libGLU
-
+  
+    # c++
+    pkg-config
     python3
     glew
     glfw
     gl3w
     SDL2
+
+    # rust
+    cargo 
+    rustc
+    rustup
+    rust-analyzer
+    llvm
+    lldb
+    clang
+    xorg.libX11 
+    xorg.xwd 
+    xorg.xdm
+    xorg.libXcursor
+    xorg.libXi
+    libxkbcommon
   ];
 in
 stdenv.mkDerivation {
@@ -61,10 +78,5 @@ stdenv.mkDerivation {
      make
      cd ..
   '';
-
-  OCL_ICD_VENDORS="/run/opengl-driver/etc/OpenCL/vendors";
-  OPENCL_LIBRARY="${ocl-icd}/lib/libOpenCL.so";
-  OPENCL_HEADERS="${opencl-headers}/include/CL";
-
-  # run cmake with: 'cmake .. -DOpenCL_LIBRARY=${OPENCL_LIBRARY} -DOpenCL_INCLUDE_DIR=${OPENCL_HEADERS}`
+    LD_LIBRARY_PATH = "${lib.makeLibraryPath general_inputs}";
 }
