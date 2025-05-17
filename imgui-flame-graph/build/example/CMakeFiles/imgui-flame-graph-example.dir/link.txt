@@ -1,1 +1,0 @@
-/nix/store/mzfk1sdv6bxvdh9slvddpj734ck99idi-gcc-wrapper-13.3.0/bin/g++ -O3 -DNDEBUG "CMakeFiles/imgui-flame-graph-example.dir/main.cpp.o" "CMakeFiles/imgui-flame-graph-example.dir/__/imgui_widget_flamegraph.cpp.o" -o imgui-flame-graph-example  /nix/store/rd1fs4rhah7msz41q867ng37xx099dx0-SDL2-2.30.6/lib/libSDL2.so ../libimgui.a -lGL
