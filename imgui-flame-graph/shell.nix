@@ -4,6 +4,8 @@ let
   general_inputs = [
     gnumake 
     cmake
+    gdb
+    lldb
     # needed for libOpenCL.so
     clang
     ocl-icd
@@ -75,7 +77,6 @@ stdenv.mkDerivation {
      mkdir -p build 
      cd build 
      cmake .. -DIMGUI_WITH_BACKEND=ON -DIMGUI_BACKEND_PLATFORM=SDL 
-     make
      cd ..
   '';
     LD_LIBRARY_PATH = "${lib.makeLibraryPath general_inputs}";
