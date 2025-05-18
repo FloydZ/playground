@@ -352,6 +352,12 @@ private:
 	void HandleMouseInputs();
 	void Render();
 
+	// custom stuff
+	std::vector<std::string> GetAssembly(int lineNumber) const;
+	int GetAdditionalLines(int startLineNumber, int  endLineNumber) const;
+	bool showAssembly = true;
+
+
 	float mLineSpacing;
 	Lines mLines;
 	EditorState mState;

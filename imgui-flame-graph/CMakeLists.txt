@@ -17,6 +17,13 @@ include_directories(${gl3w_INCLUDE_DIRS})
 include_directories(imgui)
 #include_directories(imgui/backends)
 
+
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g -O0 ${SIMD_FLAGS}")
+set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} ${SIMD_FLAGS}")
+set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -g -O0 ${SIMD_FLAGS}")
+set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} ${SIMD_FLAGS}")
+
+
 ##################################################################################################################
 # OPTIONS
 ##################################################################################################################

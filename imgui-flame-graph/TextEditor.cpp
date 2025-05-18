@@ -332,6 +332,7 @@ TextEditor::Coordinates TextEditor::ScreenPosToCoordinates(const ImVec2& aPositi
 
 	if (lineNo >= 0 && lineNo < (int)mLines.size())
 	{
+		//const int offset = GetAdditionalLines(0, lineNo);
 		auto& line = mLines.at(lineNo);
 
 		int columnIndex = 0;
@@ -851,9 +852,28 @@ void TextEditor::HandleMouseInputs()
 	}
 }
 
+std::vector<std::string> TextEditor::GetAssembly(int lineNumber) const {
+	// Dummy data – replace with your actual disassembly logic
+	if (lineNumber % 5 == 0)
+		return { "mov eax, 1"};
+	//if (lineNumber % 4 == 0)
+	//	return { "cmp eax, ebx"};
+	return {};
+}
+
+
+int TextEditor::GetAdditionalLines(const int startLineNumber,
+								   const int endLineNumber) const {
+	int c = 0;
+	for (uint32_t i = startLineNumber; i < endLineNumber; i++) {
+		c += !GetAssembly(i).empty();
+	}
+	return c;
+}
+
 void TextEditor::Render()
 {
-	/* Compute mCharAdvance regarding to scaled font size (Ctrl + mouse wheel)*/
+	/* Compute mCharAdvance regarding scaled font size (Ctrl + mouse wheel)*/
 	const float fontSize = ImGui::GetFont()->CalcTextSizeA(ImGui::GetFontSize(), FLT_MAX, -1.0f, "#", nullptr, nullptr).x;
 	mCharAdvance = ImVec2(fontSize, ImGui::GetTextLineHeightWithSpacing() * mLineSpacing);
 
@@ -883,7 +903,12 @@ void TextEditor::Render()
 
 	auto lineNo = (int)floor(scrollY / mCharAdvance.y);
 	auto globalLineMax = (int)mLines.size();
-	auto lineMax = std::max(0, std::min((int)mLines.size() - 1, lineNo + (int)floor((scrollY + contentSize.y) / mCharAdvance.y)));
+	int lineMax = std::max(0, std::min((int)mLines.size() - 1, lineNo + (int)floor((scrollY + contentSize.y) / mCharAdvance.y)));
+
+	int assembly_ctr = GetAdditionalLines(lineNo,lineMax);
+	if (showAssembly) {
+		lineMax = std::max(0, std::min((int)mLines.size() - 1, lineNo -  assembly_ctr  + (int)floor((scrollY + contentSize.y) / mCharAdvance.y)));
+	}
 
 	// Deduce mTextStart by evaluating mLines size (global lineMax) plus two spaces as text width
 	char buf[16];
@@ -894,9 +919,11 @@ void TextEditor::Render()
 	{
 		float spaceSize = ImGui::GetFont()->CalcTextSizeA(ImGui::GetFontSize(), FLT_MAX, -1.0f, " ", nullptr, nullptr).x;
 
+		int plottet_assembly_lines = 0;
 		while (lineNo <= lineMax)
 		{
-			ImVec2 lineStartScreenPos = ImVec2(cursorScreenPos.x, cursorScreenPos.y + lineNo * mCharAdvance.y);
+			const int inner_lineNo = lineNo + plottet_assembly_lines;
+			ImVec2 lineStartScreenPos = ImVec2(cursorScreenPos.x, cursorScreenPos.y + (lineNo + plottet_assembly_lines) * mCharAdvance.y);
 			ImVec2 textScreenPos = ImVec2(lineStartScreenPos.x + mTextStart, lineStartScreenPos.y);
 
 			auto& line = mLines[lineNo];
@@ -961,7 +988,7 @@ void TextEditor::Render()
 			auto lineNoWidth = ImGui::GetFont()->CalcTextSizeA(ImGui::GetFontSize(), FLT_MAX, -1.0f, buf, nullptr, nullptr).x;
 			drawList->AddText(ImVec2(lineStartScreenPos.x + mTextStart - lineNoWidth, lineStartScreenPos.y), mPalette[(int)PaletteIndex::LineNumber], buf);
 
-			if (mState.mCursorPosition.mLine == lineNo)
+			if (mState.mCursorPosition.mLine == inner_lineNo)
 			{
 				auto focused = ImGui::IsWindowFocused();
 
@@ -1070,16 +1097,22 @@ void TextEditor::Render()
 				++columnNo;
 			}
 
-			if (mLineOverlayCallback) {
-			    ImVec2 _cursorScreenPos = ImGui::GetCursorScreenPos();
-			    mLineOverlayCallback(lineNo, _cursorScreenPos);
-			}
-
-			if (!mLineBuffer.empty())
-			{
+			/// here the actual text is drawn
+			if (!mLineBuffer.empty()) {
 				const ImVec2 newOffset(textScreenPos.x + bufferOffset.x, textScreenPos.y + bufferOffset.y);
 				drawList->AddText(newOffset, prevColor, mLineBuffer.c_str());
 				mLineBuffer.clear();
+			}
+
+			if (showAssembly && !GetAssembly(lineNo).empty()) {
+			    //ImVec2 _cursorScreenPos = ImGui::GetCursorScreenPos();
+			    //mLineOverlayCallback(lineNo, _cursorScreenPos);
+				const auto asmLines = "kek\n";
+				ImVec2 pos = ImVec2(textScreenPos.x + bufferOffset.x + 40.0f, textScreenPos.y + bufferOffset.y + mCharAdvance.y);
+				drawList->AddText(pos, prevColor, asmLines);
+
+				ImGui::Dummy(ImVec2((longest + 2),  mCharAdvance.y));
+				plottet_assembly_lines += 1;
 			}
 
 			++lineNo;
@@ -1113,7 +1146,7 @@ void TextEditor::Render()
 	}
 
 
-	ImGui::Dummy(ImVec2((longest + 2), mLines.size() * mCharAdvance.y));
+	ImGui::Dummy(ImVec2((longest + 2), (mLines.size() ) * mCharAdvance.y));
 
 	if (mScrollToCursor)
 	{

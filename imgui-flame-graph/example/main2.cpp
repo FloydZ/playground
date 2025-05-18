@@ -58,6 +58,7 @@ int main() {
     return result;
 })");
         initialized = true;
+        editor.SetReadOnly(true);
     }
 
     static std::string cCode = R"(int add(int a, int b) {
@@ -70,6 +71,16 @@ int main() {
 })";
 
     static bool showDisasm = true;
+    {
+        ImGui::Begin("Hello, world!");
+        auto cpos = editor.GetCursorPosition();
+        ImGui::Text("%6d/%-6d %6d lines  | %s | %s | %s ", cpos.mLine, cpos.mColumn, editor.GetTotalLines(),
+            editor.IsOverwrite() ? "Ovr" : "Ins",
+            editor.CanUndo() ? "*" : " ",
+            editor.GetLanguageDefinition().mName.c_str());
+        ImGui::End();
+    }
+
     ImGui::Begin("C Code Editor with Inline Assembly");
     editor.Render("##CCodeEditor", ImVec2(600, 300));  // adjust size as needed
 
@@ -113,7 +124,7 @@ int main() {
                 i+=1;
             }
         }
-        ImGui::Dummy(ImVec2(0, asmLines.size() * ImGui::GetTextLineHeightWithSpacing()));
+        ImGui::Dummy(ImVec2(0, (float)asmLines.size() * ImGui::GetTextLineHeightWithSpacing()));
 
         ImGui::PopID();
         ImGui::Unindent(40.0f);
