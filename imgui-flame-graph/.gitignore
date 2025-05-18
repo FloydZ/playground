@@ -33,6 +33,7 @@
 
 # Clion project files
 .idea/
+.cache/
 cmake-build-*/
 _build/
 build/
