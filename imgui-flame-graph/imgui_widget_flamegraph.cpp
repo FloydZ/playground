@@ -1,32 +1,14 @@
-// The MIT License(MIT)
-//
-// Copyright(c) 2019 Sandy Carter
-//
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files(the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and / or sell
-// copies of the Software, and to permit persons to whom the Software is
-// furnished to do so, subject to the following conditions :
-//
-// The above copyright notice and this permission notice shall be included in all
-// copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-// SOFTWARE.
-
 #include "imgui_widget_flamegraph.h"
 
 #include "imgui.h"
 #include "imgui_internal.h"
 
+#include <iostream>
 
-
+/// \param scope_times
+/// \param max_depth
+/// \param global_start
+/// \param graph_size
 void FlameGraphDrawer::Draw(const std::vector<ScopeTimeData>& scope_times,
                             int                               max_depth,
                             std::chrono::microseconds         global_start,
@@ -71,8 +53,8 @@ void FlameGraphDrawer::Draw(const std::vector<ScopeTimeData>& scope_times,
 
     bool any_hovered = false;
 
-    for (const auto& scope_time : scope_times)
-    {
+    uint32_t ctr = 0;
+    for (const auto& scope_time : scope_times) {
         auto start_time = scope_time.start - global_start;
 
         float start_x_percent = (double)start_time.count() / frame_time.count();
@@ -84,8 +66,7 @@ void FlameGraphDrawer::Draw(const std::vector<ScopeTimeData>& scope_times,
         auto pos1 = inner_bb.Min + ImVec2(end_x_percent * inner_width, bottom_height + blockHeight);
 
         bool v_hovered = false;
-        if (ImGui::IsMouseHoveringRect(pos0, pos1))
-        {
+        if (ImGui::IsMouseHoveringRect(pos0, pos1)) {
             ImGui::SetTooltip("%s: %8.4gms", scope_time.name.c_str(), (double)scope_time.duration.count() / 1000.0);
             v_hovered   = true;
             any_hovered = v_hovered;
@@ -93,18 +74,29 @@ void FlameGraphDrawer::Draw(const std::vector<ScopeTimeData>& scope_times,
 
         window->DrawList->AddRectFilled(pos0, pos1, v_hovered ? col_hovered : col_base);
         window->DrawList->AddRect(pos0, pos1, v_hovered ? col_outline_hovered : col_outline_base);
+        // <-- use last item id as popup id
+
+        std::string nodeLabel = "##flame_node_" + std::to_string(ctr);
+        //ImGui::PushID(nodeLabel.c_str());
+        if (ImGui::BeginPopupContextItem(nodeLabel.c_str()))  {
+            ImGui::Text("This a popup for \"%s\"!", scope_time.name.c_str());
+            if (ImGui::Button("Close"))
+                ImGui::CloseCurrentPopup();
+            ImGui::EndPopup();
+        }
+
         auto textSize   = ImGui::CalcTextSize(scope_time.name.c_str());
         auto boxSize    = (pos1 - pos0);
         auto textOffset = ImVec2(0.0f, 0.0f);
-        if (textSize.x < boxSize.x)
-        {
+        if (textSize.x < boxSize.x) {
             textOffset = ImVec2(0.5f, 0.5f) * (boxSize - textSize);
             ImGui::RenderText(pos0 + textOffset, scope_time.name.c_str());
         }
+
+        ctr += 1;
     }
 
-    if (!any_hovered && ImGui::IsItemHovered())
-    {
+    if (!any_hovered && ImGui::IsItemHovered()) {
         ImGui::SetTooltip("Total: %8.4g", frame_time.count() / 1000.0);
     }
 }
