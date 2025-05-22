@@ -6,27 +6,33 @@ int main() {
     auto window = init();
     ImGuiIO& io = ImGui::GetIO();
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
-std::vector<std::string> source = {
-    "int sum = 0;",
-    "for (int i = 0; i < 10; i++)",
-    "    sum += i;"
-};
 
-std::vector<std::string> assembly = {
-    "mov eax, 0",
-    "mov ecx, 0",
-    "cmp ecx, 10",
-    "jl .loop",
-    "add eax, ecx",
-    "inc ecx",
-    "jmp .loop"
-};
+    std::vector<std::string> source = {
+        "int sum = 0;",
+        "for (int i = 0; i < 10; i++)",
+        "    sum += i;"
+    };
 
-std::vector<CodeMapEntry> map = {
-    {0, {0}},
-    {1, {1, 2, 3}},
-    {2, {5}}
-};
+    std::vector<std::string> assembly = {
+        "mov eax, 0",
+        "mov ecx, 0",
+        "cmp ecx, 10",
+        "jl .loop",
+        "add eax, ecx",
+        "inc ecx",
+        "jmp .loop"
+    };
+
+    std::vector<CodeMapEntry> map = {
+        {0, {0}},
+        {1, {1, 2, 3}},
+        {2, {5}}
+    };
+
+
+    // high dpi stuff
+    const float imgui_additional_scale = 4;
+    ImGui::GetStyle().ScaleAllSizes(imgui_additional_scale);
 
     bool done = false;
     while (!done) {

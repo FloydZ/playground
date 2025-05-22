@@ -51,86 +51,79 @@ void DrawSourceToAssemblyVisualizer(
         ImVec2 textPos = ImGui::GetCursorScreenPos();
         asmLinePositions[i] = ImVec2(textPos.x, textPos.y + lineHeight * 0.5f);
         ImGui::Text("%s", assemblyCode[i].c_str());
+
+        // Generate unique label for InputText using ## to hide label text
+        //std::string inputLabel = "##source_line_" + std::to_string(i);
+        //ImGui::PushItemWidth(columnWidth - 20);
+        //ImGui::InputText(inputLabel.c_str(), &sourceCode[i]);
+        //ImGui::PopItemWidth();
     }
     ImGui::EndGroup();
 
-    // Draw background blocks for source lines
     for (const auto& map : mappings) {
         if (map.sourceLine >= sourceLinePositions.size() || map.assemblyLines.empty())
             continue;
 
-        ImVec2 srcPos = sourceLinePositions[map.sourceLine];
-        ImVec2 topLeft = ImVec2(sourceColumnPos.x-3 , srcPos.y - lineHeight * 0.5f);
-        ImVec2 bottomRight = ImVec2(sourceColumnPos.x + columnWidth - 10, srcPos.y + lineHeight * 0.5f);
+        const int firstLine = map.assemblyLines.front();
+        const int lastLine = map.assemblyLines.back();
 
-        ImU32 color = IM_COL32(255, 200 - (map.sourceLine * 25) % 155, 100, 40);
-        drawList->AddRectFilled(topLeft, bottomRight, color, 4.0f);
-        drawList->AddRect(topLeft, bottomRight, IM_COL32(255, 180, 100, 100), 4.0f);
-    }
+        const ImU32 color = IM_COL32(255, 200 - (map.sourceLine * 25) % 155, 100, 40);
+        const ImU32 edgeColor = color;
 
-    // Draw background blocks for assembly groups
-    for (const auto& map : mappings) {
-        if (map.assemblyLines.empty()) continue;
+        // Draw background blocks for source lines
+        {
+            const ImVec2 srcPos = sourceLinePositions[map.sourceLine];
+            const ImVec2 topLeft = ImVec2(sourceColumnPos.x-3 , srcPos.y - lineHeight * 0.5f);
+            const ImVec2 bottomRight = ImVec2(sourceColumnPos.x + columnWidth - 10, srcPos.y + lineHeight * 0.5f);
 
-        const std::vector<int> lines = map.assemblyLines;
-        const int firstLine = lines.front();
-        const int lastLine = lines.back();
+            drawList->AddRectFilled(topLeft, bottomRight, color, 4.0f);
+            drawList->AddRect(topLeft, bottomRight, edgeColor, 4.0f);
+        }
 
-        if (firstLine >= asmLinePositions.size() || lastLine >= asmLinePositions.size())
-            continue;
+        // Draw background blocks for assembly groups
+        {
+            const ImVec2 topLeft = ImVec2(asmColumnPos.x - 5, asmLinePositions[firstLine].y - lineHeight * 0.5f);
+            const ImVec2 bottomRight = ImVec2(asmColumnPos.x + columnWidth - 10, asmLinePositions[lastLine].y + lineHeight * 0.5f);
 
-        ImVec2 topLeft = ImVec2(asmColumnPos.x - 5, asmLinePositions[firstLine].y - lineHeight * 0.5f);
-        ImVec2 bottomRight = ImVec2(asmColumnPos.x + columnWidth - 10, asmLinePositions[lastLine].y + lineHeight * 0.5f);
+            drawList->AddRectFilled(topLeft, bottomRight, color, 4.0f);
+            drawList->AddRect(topLeft, bottomRight, edgeColor, 4.0f);
+        }
+        {
+            const float srcY = sourceLinePositions[map.sourceLine].y;
+            const float srcX = sourceLinePositions[map.sourceLine].x + columnWidth ;
+            const ImVec2 srcTopRight = ImVec2(srcX + 5, srcY - lineHeight * 0.5f);
+            const ImVec2 srcBotRight = ImVec2(srcX + 5, srcY + lineHeight * 0.5f);
 
-        ImU32 color = IM_COL32(100, 100 + (map.sourceLine * 40) % 155, 255, 40);
-        drawList->AddRectFilled(topLeft, bottomRight, color, 4.0f);
-        drawList->AddRect(topLeft, bottomRight, IM_COL32(100, 100, 255, 100), 4.0f);
-    }
+            // Get top/bottom of assembly block
+            const ImVec2 asmTopLeft = ImVec2(asmLinePositions[firstLine].x - 5, asmLinePositions[firstLine].y - lineHeight * 0.5f);
+            const ImVec2 asmBotLeft = ImVec2(asmLinePositions[lastLine].x - 5, asmLinePositions[lastLine].y + lineHeight * 0.5f);
 
-    // Draw bounding-box Bezier curves from source to assembly blocks
-    for (const auto& map : mappings) {
-        if (map.sourceLine >= sourceLinePositions.size() || map.assemblyLines.empty())
-            continue;
+            //const auto mid1 = ImVec2((srcTopRight.x + asmTopLeft.x) * 0.5f, srcTopRight.y);
 
-        // Sort and get bounds of assembly lines
-        std::vector<int> asmLines = map.assemblyLines;
-        std::sort(asmLines.begin(), asmLines.end());
+            drawList->PathLineTo(srcBotRight);
+            drawList->PathBezierQuadraticCurveTo( srcBotRight, asmBotLeft, 2.0);
+            //drawList->PathLineTo(q1);
+            //drawList->PathBezierCurveTo(c2, c2, q0);
+            //drawList->PathFillConvex(col);
 
-        int asmFirst = asmLines.front();
-        int asmLast  = asmLines.back();
+            // Top corner Bezier
+            //drawList->AddBezierQuadratic(
+            //    srcTopRight,
+            //    ImVec2((srcTopRight.x + asmTopLeft.x) * 0.5f, srcTopRight.y),
+            //    asmTopLeft,
+            //    color,
+            //    2.0f
+            //);
 
-        if (asmFirst >= asmLinePositions.size() || asmLast >= asmLinePositions.size())
-            continue;
-
-        // Get top/bottom of source line block
-        const float srcY = sourceLinePositions[map.sourceLine].y;
-        const float srcX = sourceLinePositions[map.sourceLine].x + columnWidth ;
-        ImVec2 srcTopRight = ImVec2(srcX + 5, srcY - lineHeight * 0.5f);
-        ImVec2 srcBotRight = ImVec2(srcX + 5, srcY + lineHeight * 0.5f);
-
-        // Get top/bottom of assembly block
-        ImVec2 asmTopLeft = ImVec2(asmLinePositions[asmFirst].x - 5, asmLinePositions[asmFirst].y - lineHeight * 0.5f);
-        ImVec2 asmBotLeft = ImVec2(asmLinePositions[asmLast].x - 5, asmLinePositions[asmLast].y + lineHeight * 0.5f);
-
-        ImU32 arrowColor = IM_COL32(255, 100, 0, 255);
-
-        // Top corner Bezier
-        drawList->AddBezierQuadratic(
-            srcTopRight,
-            ImVec2((srcTopRight.x + asmTopLeft.x) * 0.5f, srcTopRight.y),
-            asmTopLeft,
-            arrowColor,
-            2.0f
-        );
-
-        // Bottom corner Bezier
-        drawList->AddBezierQuadratic(
-            srcBotRight,
-            ImVec2((srcBotRight.x + asmBotLeft.x) * 0.5f, srcBotRight.y),
-            asmBotLeft,
-            arrowColor,
-            2.0f
-        );
+            //// Bottom corner Bezier
+            //drawList->AddBezierQuadratic(
+            //    srcBotRight,
+            //    ImVec2((srcBotRight.x + asmBotLeft.x) * 0.5f, srcBotRight.y),
+            //    asmBotLeft,
+            //    color,
+            //    2.0f
+            //);
+        }
     }
 
     ImGui::End(); // End "Code Visualizer"
