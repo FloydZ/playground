@@ -1,0 +1,6 @@
+[submodule "imgui-flame-graph/imgui"]
+	path = imgui-flame-graph/imgui
+	url = https://github.com/ocornut/imgui/
+[submodule "imgui-flame-graph/imgui-node-editor"]
+	path = imgui-flame-graph/imgui-node-editor
+	url = https://github.com/thedmd/imgui-node-editor
