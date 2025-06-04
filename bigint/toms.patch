@@ -1,0 +1,252 @@
+diff --git a/demo/timing.c b/demo/timing.c
+index 5bf2c62..48f1153 100644
+--- a/demo/timing.c
++++ b/demo/timing.c
+@@ -3,9 +3,13 @@
+ 
+ /* TFM timing analysis */
+ #define _GNU_SOURCE
++
++
++#include <gmp.h>
+ #include <tfm.h>
+ #include <time.h>
+ #include <unistd.h>
++#include <stdint.h>
+ 
+ /* RDTSC from Scott Duplichan */
+ static ulong64 TIMFUNC(void)
+@@ -105,6 +109,170 @@ static void Addition(ulong64 t1)
+    }
+ }
+ 
++const uint64_t N = 1u<<15;
++static void Multiplication_gmp(ulong64 t1)
++{
++   mpz_t a_,b_,c;
++   ulong64 t2;
++   unsigned long t, ix;
++
++   mpz_ptr a, b;
++
++   gmp_randstate_t rs;
++   gmp_randinit_default (rs);
++   for (t = 2; t < FP_SIZE / 2; t += 2) {
++      mpz_init(a_);
++      mpz_init(b_);
++      mpz_init(c);
++
++      mpz_urandomb (a_, rs, t*64);
++      mpz_urandomb (b_, rs, t*64);
++
++      a = a_;
++      b = b_;
++
++      t2 = -1;
++      for (ix = 0; ix < N; ++ix) {
++         t1 = TIMFUNC();
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         mpz_mul(c, a, b);
++         t2 = (TIMFUNC() - t1) >> 7;
++         if (t1 < t2) {
++            --ix;
++            t2 = t1;
++         }
++      }
++      print_line(t * DIGIT_BIT, t2);
++   }
++}
++
++
+ static void Multiplication(ulong64 t1)
+ {
+    fp_int a,b,c;
+@@ -121,7 +289,7 @@ static void Multiplication(ulong64 t1)
+       a.used = t;
+       b.used = t;
+       t2 = -1;
+-      for (ix = 0; ix < 100; ++ix) {
++      for (ix = 0; ix < N; ++ix) {
+          t1 = TIMFUNC();
+          fp_mul(&a, &b, &c);
+          fp_mul(&a, &b, &c);
+@@ -648,12 +816,13 @@ struct {
+    void (*fn)(ulong64 t1);
+    const char* name;
+ } funcs[] = {
+-             FN(Addition),
++             // FN(Addition),
++             FN(Multiplication_gmp),
+              FN(Multiplication),
+-             FN(Squaring),
+-             FN(Invmod),
+-             FN(Montgomery),
+-             FN(Exptmod),
++             // FN(Squaring),
++             // FN(Invmod),
++             // FN(Montgomery),
++             // FN(Exptmod),
+ };
+ 
+ int main(int argc, char **argv)
+diff --git a/makefile_include.mk b/makefile_include.mk
+index 53d693c..67714dd 100644
+--- a/makefile_include.mk
++++ b/makefile_include.mk
+@@ -55,7 +55,7 @@ CFLAGS += -g3
+ else
+ ifndef IGNORE_SPEED
+ 
+-CFLAGS += -O3
++CFLAGS += -O3 -march=native -lgmp
+ 
+ PLATFORM := $(shell uname | sed -e 's/_.*//')
+ ifneq ($(PLATFORM), Darwin)
+diff --git a/src/headers/tfm.h b/src/headers/tfm.h
+index 47b2d28..f26abe8 100644
+--- a/src/headers/tfm.h
++++ b/src/headers/tfm.h
+@@ -90,7 +90,7 @@
+    Enable these if you are doing 20, 24, 28, 32, 48, 64 digit multiplications (useful for RSA)
+    Less important on 64-bit machines as 32 digits == 2048 bits
+  */
+-#if 0
++#if 1
+ #define TFM_MUL3
+ #define TFM_MUL4
+ #define TFM_MUL6
+@@ -107,7 +107,7 @@
+ #define TFM_MUL48
+ #define TFM_MUL64
+ 
+-#if 0
++#if 1
+ #define TFM_SQR3
+ #define TFM_SQR4
+ #define TFM_SQR6
